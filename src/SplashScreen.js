@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, StyleSheet, View, Image} from 'react-native';
+import {Animated, Dimensions, StyleSheet, View} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
-import images from '../res/images';
-import colors from '../res/colors';
-// import App from './App';
+import images from 'res/images';
+import App from '~/App';
+import colors from 'res/colors';
 
 let windowHeight = Dimensions.get('window').height;
 
@@ -18,12 +18,14 @@ class SplashScreen extends Component {
   translateY = new Animated.Value(0);
 
   setLogoIsLoaded = () => {
+    BootSplash.hide();
 
     // You can uncomment this line to add a delay on app startup
     // let data = await fakeApiCallWithoutBadNetwork(3000);
+
     let useNativeDriver = true;
 
-    Animated.stagger(1000, [
+    Animated.stagger(300, [
       Animated.spring(this.translateY, {useNativeDriver, toValue: -50}),
       Animated.spring(this.translateY, {
         useNativeDriver,
@@ -34,8 +36,8 @@ class SplashScreen extends Component {
     Animated.timing(this.opacity, {
       useNativeDriver,
       toValue: 0,
-      duration: 3000,
-      //delay: 350,
+      duration: 500,
+      delay: 350,
     }).start(() => {
       this.setState({
         bootSplashIsVisible: false,
@@ -47,11 +49,8 @@ class SplashScreen extends Component {
     const {bootSplashIsVisible} = this.state;
 
     return (
-    // <View style={styles.container}>
-    //     <Image source={images.logo} resizeMode="contain" style={{ width: '100%', height: 200 }} />
-    // </View>
       <View style={styles.container}>
-        
+        <App />
         {bootSplashIsVisible && (
           <Animated.View
             style={[
@@ -60,7 +59,7 @@ class SplashScreen extends Component {
               {opacity: this.opacity},
             ]}>
             <Animated.Image
-              source={images.logo}
+              source={images.inno}
               resizeMode="contain"
               fadeDuration={0}
               onLoadEnd={this.setLogoIsLoaded}
@@ -80,8 +79,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    // justifyContent: "center",
-    // padding: 30
   },
   bootsplash: {
     flex: 1,

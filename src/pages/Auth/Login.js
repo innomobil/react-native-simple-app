@@ -5,11 +5,14 @@ import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Input, Button, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
+import {inject, observer} from 'mobx-react';
 import * as yup from 'yup';
-// import Api from '~/api';
-import {colors} from '../../../res/colors';
+import Api from '~/api';
+import {Formik} from 'formik';
+import {colors} from 'res';
 
-
+@inject('authStore')
+@observer
 class Login extends React.Component {
   state = {
     isVisible: true,
